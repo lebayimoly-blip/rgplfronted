@@ -209,7 +209,7 @@ ul li:hover {
 /* 📊 Graphiques */
 .chart-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 300px;
   margin: 2rem auto;
   padding: 1rem;
   background: #fff;
@@ -219,12 +219,12 @@ ul li:hover {
 
 .chart-wrapper {
   width: 100%;
-  max-width: 600px;
+  max-width: 200px;
   margin: 2rem auto;
 }
 
 canvas, svg {
   width: 100% !important;
-  height: 400px !important; /* hauteur uniforme pour lisibilité */
+  height: 200px !important; /* hauteur uniforme pour lisibilité */
   display: block;
 }
