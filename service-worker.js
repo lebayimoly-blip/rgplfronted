@@ -1,21 +1,13 @@
-const CACHE_NAME = 'rgpl-cache-v1';
+const CACHE_NAME = 'rgpl-cache-v2';
 
 const OFFLINE_URLS = [
-  '/', '/home', '/login', '/page-famille-edit', '/page-familles',
-  '/page-utilisateurs', '/page-stats', '/doublons', '/synchronisation',
-  '/zone-travail', '/zones-attribuees', '/unauthorized', '/offline.html',
+  'index.html', 'login.html', 'menu.html', 'familles.html',
+  'doublons.html', 'stats.html', 'utilisateurs.html',
+  'zone_travail.html', 'synchronisation.html', 'offline.html',
 
   // fichiers statiques
-  '/static/style.css', '/static/js/db.js', '/static/js/main.js',
-  '/static/icons/icons.svg', '/static/images/rgpl.png',
-
-  // templates accessibles directement (si routés)
-  '/add_membre.html', '/admin_dashboard.html', '/base.html',
-  '/doublons.html', '/edit_famille.html', '/familles.html',
-  '/famille_detail.html', '/famille_edit.html', '/index.html',
-  '/login.html', '/stats.html', '/synchronisation.html',
-  '/unauthorized.html', '/utilisateurs.html',
-  '/zones_attribuees.html', '/zone_travail.html'
+  'static/style.css', 'static/js/db.js', 'static/js/main.js',
+  'static/icons/icons.svg', 'static/images/rgpl.png'
 ];
 
 function openDatabase() {
@@ -29,48 +21,47 @@ function openDatabase() {
       }
     };
 
-    request.onsuccess = event => {
-      resolve(event.target.result);
-    };
-
-    request.onerror = event => {
-      reject(event.target.error);
-    };
+    request.onsuccess = event => resolve(event.target.result);
+    request.onerror = event => reject(event.target.error);
   });
 }
 
-// INSTALLATION : mise en cache des ressources
+// INSTALLATION : mise en cache des ressources statiques
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async cache => {
-      for (const url of OFFLINE_URLS) {
-        try {
-          await cache.add(url);
-        } catch (err) {
-          console.warn(`Échec du cache pour ${url}`, err);
-        }
-      }
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(OFFLINE_URLS))
   );
 });
 
-// FETCH : stratégie cache-first simple + exclusion des API
+// FETCH : hybride
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // ⛔ Ignore les requêtes API
-  if (url.pathname.startsWith('/api/')) return;
+  // Ignore API → network-first
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(event.request))
+    );
+    return;
+  }
 
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      if (response) {
+  // Network-first pour JSON (stats, données dynamiques)
+  if (url.pathname.endsWith('.json')) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         return response;
-      }
+      }).catch(() => caches.match(event.request))
+    );
+    return;
+  }
 
-      return fetch(event.request).catch(() =>
-        caches.match('/offline.html')
-      );
-    })
+  // Cache-first pour le reste (HTML, CSS, JS, images)
+  event.respondWith(
+    caches.match(event.request).then(response =>
+      response || fetch(event.request).catch(() => caches.match('offline.html'))
+    )
   );
 });
 
@@ -81,9 +72,8 @@ self.addEventListener('sync', event => {
   }
 });
 
-// FONCTION DE SYNCHRONISATION
 async function syncPendingData() {
-  const db = await openDB('rgpl-db', 1);
+  const db = await openDatabase();
   const tx = db.transaction('pending', 'readonly');
   const store = tx.objectStore('pending');
   const allData = await store.getAll();
@@ -93,9 +83,7 @@ async function syncPendingData() {
       await fetch('/api/sync', {
         method: 'POST',
         body: JSON.stringify(item),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       });
     } catch (err) {
       console.error('Sync échoué pour un élément', err);

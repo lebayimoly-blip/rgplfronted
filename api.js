@@ -93,8 +93,9 @@ export async function getZones(token) {
   const response = await fetch(`${API_BASE_URL}/zones/`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!response.ok) throw new Error("Erreur lors du chargement des zones");
-  return response.json();
+if (!response.ok) {
+  const err = await response.json().catch(() => ({}));
+  throw new Error(err.detail || "Erreur lors de ...");
 }
 
 export async function setZone(zoneId, token) {

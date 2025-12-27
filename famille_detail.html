@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d6efd" />
   <title>Détails de la famille</title>
-  <link rel="stylesheet" href="/static/style.css" />
+
+  <!-- Chemins relatifs -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="static/icons/icon-192.png" />
+  <link rel="stylesheet" href="static/style.css" />
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -75,7 +81,7 @@
 
     {% if famille.photo_path %}
     <p><strong>Photo du logement :</strong></p>
-    <img src="/uploads/{{ famille.photo_path }}" alt="Photo logement" width="300" style="border-radius: 8px;" />
+    <img src="uploads/{{ famille.photo_path }}" alt="Photo logement" width="300" style="border-radius: 8px;" />
     {% endif %}
 
     <div style="border: 2px solid #ffc107; padding: 15px; margin: 20px 0; background-color: #fff8e1;">
@@ -121,12 +127,13 @@
     </table>
 
     <div style="text-align:center; margin-top: 2rem;">
-      <a href="/page-familles" class="btn btn-secondary">⬅️ Retour</a>
+      <a href="familles.html" class="btn btn-secondary">⬅️ Retour</a>
     </div>
   </main>
- <!-- Scripts JS -->
-  <script src="/static/js/db.js"></script>
-  <script src="/static/js/main.js"></script>
-  <script src="/static/js/sw-register.js"></script>
+
+  <!-- Scripts JS avec chemins relatifs -->
+  <script src="static/js/db.js"></script>
+  <script src="static/js/main.js"></script>
+  <script src="static/js/sw-register.js"></script>
 </body>
 </html>

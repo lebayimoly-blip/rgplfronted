@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d6efd" />
   <title>Liste des familles</title>
-  <link rel="stylesheet" href="/static/style.css" />
+
+  <!-- Chemins relatifs -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="static/icons/icon-192.png" />
+  <link rel="stylesheet" href="static/style.css" />
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -132,8 +138,8 @@
           <strong>{{ famille.first_name }} {{ famille.last_name }}</strong> (Famille : {{ famille.name }} — {{ famille.membres|length }} membres)
         </button>
         <div class="actions">
-          <a href="/familles/{{ famille.id }}" class="btn btn-sm btn-primary">👁️ Voir</a>
-          <a href="/familles/{{ famille.id }}/edit" class="btn btn-sm btn-secondary">✏️ Modifier</a>
+          <a href="familles/{{ famille.id }}" class="btn btn-sm btn-primary">👁️ Voir</a>
+          <a href="familles/{{ famille.id }}/edit" class="btn btn-sm btn-secondary">✏️ Modifier</a>
         </div>
 
         <div id="details-{{ famille.id }}" class="details" style="display:none;">
@@ -145,7 +151,7 @@
           <p><strong>Date de création :</strong> {{ famille.created_at.strftime('%d/%m/%Y à %H:%M') if famille.created_at else "N/A" }}</p>
           {% if famille.photo_path %}
           <p><strong>Photo logement :</strong></p>
-          <img src="/uploads/{{ famille.photo_path }}" alt="Photo logement" width="200" />
+          <img src="uploads/{{ famille.photo_path }}" alt="Photo logement" width="200" />
           {% endif %}
           <h4>Membres</h4>
           <ul>
@@ -193,9 +199,10 @@
       div.style.display = div.style.display === "none" ? "block" : "none";
     }
   </script>
- <!-- Scripts JS -->
-  <script src="/static/js/db.js"></script>
-  <script src="/static/js/main.js"></script>
-  <script src="/static/js/sw-register.js"></script>
+
+  <!-- Scripts JS avec chemins relatifs -->
+  <script src="static/js/db.js"></script>
+  <script src="static/js/main.js"></script>
+  <script src="static/js/sw-register.js"></script>
 </body>
 </html>

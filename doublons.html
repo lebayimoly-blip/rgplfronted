@@ -1,33 +1,56 @@
-<main>
-  <h1>Doublons détectés</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d6efd" />
+  <title>Doublons détectés</title>
 
-  <div style="border:1px solid #ccc; padding:1rem; margin-bottom:1rem;">
-    <h3>Jean DUPONT — 1990-01-01</h3>
+  <!-- Inclusion du CSS -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="static/icons/icon-192.png" />
+  <link rel="stylesheet" href="static/style.css" />
+</head>
+<body>
+  <main>
+    <h1>Doublons détectés</h1>
 
-    <form method="post" action="/doublons/supprimer-groupe/" style="margin-bottom: 1rem;">
-      <input type="hidden" name="prenom" value="Jean">
-      <input type="hidden" name="nom" value="Dupont">
-      <input type="hidden" name="date_naissance" value="1990-01-01">
-      <button type="submit" onclick="return confirm('Supprimer tous les doublons sauf un ?')">
-        🧹 Supprimer tous sauf un
-      </button>
-    </form>
+    <div style="border:1px solid #ccc; padding:1rem; margin-bottom:1rem;">
+      <h3>Jean DUPONT — 1990-01-01</h3>
 
-    <ul>
-      <li>
-        ID #123 — Jean Dupont — 1990-01-01
-        <form method="post" action="/doublons/supprimer/123" style="display:inline;">
-          <button type="submit" onclick="return confirm('Supprimer ce doublon ?')">🗑️ Supprimer</button>
-        </form>
-      </li>
-      <li>
-        ID #124 — Jean Dupont — 1990-01-01
-        <form method="post" action="/doublons/supprimer/124" style="display:inline;">
-          <button type="submit" onclick="return confirm('Supprimer ce doublon ?')">🗑️ Supprimer</button>
-        </form>
-      </li>
-    </ul>
-  </div>
+      <!-- Action backend : reste relatif car géré par FastAPI -->
+      <form method="post" action="doublons/supprimer-groupe/" style="margin-bottom: 1rem;">
+        <input type="hidden" name="prenom" value="Jean">
+        <input type="hidden" name="nom" value="Dupont">
+        <input type="hidden" name="date_naissance" value="1990-01-01">
+        <button type="submit" onclick="return confirm('Supprimer tous les doublons sauf un ?')">
+          🧹 Supprimer tous sauf un
+        </button>
+      </form>
 
-  <a href="/home" class="btn btn-primary">⬅️ Retour à l'accueil</a>
-</main>
+      <ul>
+        <li>
+          ID #123 — Jean Dupont — 1990-01-01
+          <form method="post" action="doublons/supprimer/123" style="display:inline;">
+            <button type="submit" onclick="return confirm('Supprimer ce doublon ?')">🗑️ Supprimer</button>
+          </form>
+        </li>
+        <li>
+          ID #124 — Jean Dupont — 1990-01-01
+          <form method="post" action="doublons/supprimer/124" style="display:inline;">
+            <button type="submit" onclick="return confirm('Supprimer ce doublon ?')">🗑️ Supprimer</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Lien corrigé : relatif -->
+    <a href="index.html" class="btn btn-primary">⬅️ Retour à l'accueil</a>
+  </main>
+
+  <!-- Scripts JS -->
+  <script src="static/js/db.js"></script>
+  <script src="static/js/main.js"></script>
+  <script src="static/js/sw-register.js"></script>
+</body>
+</html>
