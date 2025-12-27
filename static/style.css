@@ -42,9 +42,6 @@ nav {
 
 .menu li {
   list-style: none;
-  background: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   align-items: center;
   gap: 0.5em;
@@ -203,64 +200,21 @@ ul li:hover {
     width: 100%;
     font-size: 1rem;
   }
+
+  canvas {
+    height: 250px !important; /* plus petit sur mobile */
+  }
 }
 
 /* 📊 Graphiques */
 .chart-container {
   width: 100%;
-  max-width: 800px;   /* largeur maximale */
-  margin: 2rem auto;  /* centré avec marges */
+  max-width: 800px;
+  margin: 2rem auto;
   padding: 1rem;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-canvas, svg {
-  width: 100% !important;   /* occupe toute la largeur du conteneur */
-  height: 400px !important; /* hauteur fixe pour lisibilité */
-  display: block;
-}
-
-@media (max-width: 600px) {
-  canvas, svg {
-    height: 250px !important; /* plus petit sur mobile */
-  }
-}
-
-/* 🧭 Menu de navigation */
-nav {
-  margin-top: 0.5rem;
-}
-
-.menu {
-  display: flex;              /* aligne horizontalement */
-  flex-wrap: wrap;            /* permet retour à la ligne si trop long */
-  justify-content: center;    /* centre les boutons */
-  gap: 1rem;                  /* espace entre les boutons */
-  padding: 0;
-  margin: 0;
-}
-
-.menu li {
-  list-style: none;
-}
-
-.menu a {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  color: var(--text-light);
-  text-decoration: none;
-  font-weight: 600;
-  padding: 0.5em 1em;
-  border-radius: 6px;
-  background-color: transparent;
-  transition: background-color 0.3s ease;
-}
-
-.menu a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .chart-wrapper {
@@ -269,7 +223,8 @@ nav {
   margin: 2rem auto;
 }
 
-canvas {
+canvas, svg {
   width: 100% !important;
-  height: auto !important;
+  height: 400px !important; /* hauteur uniforme pour lisibilité */
+  display: block;
 }

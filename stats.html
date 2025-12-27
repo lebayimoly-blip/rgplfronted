@@ -3,55 +3,53 @@
 {% block title %}Statistiques{% endblock %}
 
 {% block content %}
-  <main style="padding: 2rem;">
-    <h1>Statistiques globales</h1>
+  <h1>Statistiques globales</h1>
 
-    <p><strong>Total familles :</strong> <span id="totalFamilles">...</span></p>
-    <p><strong>Total membres :</strong> <span id="totalMembres">...</span></p>
+  <p><strong>Total familles :</strong> <span id="totalFamilles">...</span></p>
+  <p><strong>Total membres :</strong> <span id="totalMembres">...</span></p>
 
-    <hr />
+  <hr />
 
-    <form id="filtreForm" style="margin-bottom: 20px;">
-      <label>📅 Filtrer par année :</label>
-      <input type="number" name="annee" placeholder="ex: 2023" />
-      <label>ou depuis (années) :</label>
-      <input type="number" name="depuis" placeholder="ex: 5" />
-      <button type="submit">Appliquer</button>
-    </form>
+  <form id="filtreForm" style="margin-bottom: 20px;">
+    <label>📅 Filtrer par année :</label>
+    <input type="number" name="annee" placeholder="ex: 2023" />
+    <label>ou depuis (années) :</label>
+    <input type="number" name="depuis" placeholder="ex: 5" />
+    <button type="submit">Appliquer</button>
+  </form>
 
-    <p id="filtreActif"></p>
+  <p id="filtreActif"></p>
 
-    <hr />
+  <hr />
 
-    <h2>Répartition par genre</h2>
-    <div class="chart-wrapper">
-      <canvas id="genreChart"></canvas>
-    </div>
+  <h2>Répartition par genre</h2>
+  <div class="chart-wrapper">
+    <canvas id="genreChart"></canvas>
+  </div>
 
-    <h2>Répartition par province</h2>
-    <div class="chart-wrapper">
-      <canvas id="provinceChart"></canvas>
-    </div>
+  <h2>Répartition par province</h2>
+  <div class="chart-wrapper">
+    <canvas id="provinceChart"></canvas>
+  </div>
 
-    <h2>Répartition des rôles</h2>
-    <div class="chart-wrapper">
-      <canvas id="roleChart"></canvas>
-    </div>
+  <h2>Répartition des rôles</h2>
+  <div class="chart-wrapper">
+    <canvas id="roleChart"></canvas>
+  </div>
 
-    <h2>Répartition par ville</h2>
-    <div class="chart-wrapper">
-      <canvas id="villeChart"></canvas>
-    </div>
+  <h2>Répartition par ville</h2>
+  <div class="chart-wrapper">
+    <canvas id="villeChart"></canvas>
+  </div>
 
-    <h2>Taux de natalité par année</h2>
-    <div class="chart-wrapper">
-      <canvas id="birthChart"></canvas>
-    </div>
+  <h2>Taux de natalité par année</h2>
+  <div class="chart-wrapper">
+    <canvas id="birthChart"></canvas>
+  </div>
 
-    <hr />
-    <button onclick="exportStatsCSV()">📥 Exporter les statistiques</button>
-    <a href="/home" class="btn btn-primary">⬅️ Retour</a>
-  </main>
+  <hr />
+  <button onclick="exportStatsCSV()">📥 Exporter les statistiques</button>
+  <a href="/home" class="btn btn-primary">⬅️ Retour</a>
 {% endblock %}
 
 {% block scripts %}
