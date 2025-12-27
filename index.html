@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0d6efd">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d6efd" />
 
   <!-- Chemins relatifs -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="static/icons/icon-192.png">
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="static/icons/icon-192.png" />
+  <link rel="stylesheet" href="static/style.css" />
 
   <title>RGPL - Tableau de bord</title>
 
@@ -21,30 +21,23 @@
     }
   </script>
 </head>
-
 <body>
-  <!-- Injection dynamique des symboles SVG -->
-  <div id="svg-sprite-container"></div>
-  <script>
-    fetch("static/icons/icons.svg")
-      .then(res => res.text())
-      .then(svg => {
-        document.getElementById("svg-sprite-container").innerHTML = svg;
-      });
-  </script>
-
   <!-- Barre de navigation -->
   <header>
+    <h1 style="text-align:center; color:#1C3D7A;">📋 Menu principal</h1>
     <nav>
       <ul class="menu">
-        <li><a href="index.html"><svg class="icon"><use href="#icon-stats"/></svg><span>Accueil</span></a></li>
-        <li><a href="zone_travail.html"><span>🗺️ Définir zone de travail</span></a></li>
-        <li><a href="familles.html"><svg class="icon"><use href="#icon-familles"/></svg><span>Familles</span></a></li>
-        <li><a href="utilisateurs.html"><svg class="icon"><use href="#icon-users"/></svg><span>Utilisateurs</span></a></li>
-        <li><a href="stats.html"><svg class="icon"><use href="#icon-stats"/></svg><span>Statistiques</span></a></li>
-        <li><a href="doublons.html"><svg class="icon"><use href="#icon-users"/></svg><span>🔁 Doublons</span></a></li>
-        <li><a href="synchronisation.html"><svg class="icon"><use href="#icon-sync"/></svg><span>Synchronisation</span></a></li>
-        <li><a href="famille_edit.html"><svg class="icon"><use href="#icon-familles"/></svg><span>➕ Ajouter une famille</span></a></li>
+        <li><a href="index.html">📊 Tableau de bord</a></li>
+        <li><a href="familles.html">👨‍👩‍👧 Familles</a></li>
+        <li><a href="ajouter_membre.html">➕ Ajouter un membre</a></li>
+        <li><a href="famille_edit.html">🧾 Modifier une famille</a></li>
+        <li><a href="stats.html">📈 Statistiques</a></li>
+        <li><a href="doublons.html">🔁 Doublons</a></li>
+        <li><a href="utilisateurs.html">👥 Utilisateurs</a></li>
+        <li><a href="zone_travail.html">🗺️ Définir une zone</a></li>
+        <li><a href="synchronisation.html">🔄 Synchronisation</a></li>
+        <li><a href="admin_dashboard.html">⚙️ Admin Dashboard</a></li>
+        <li><a href="login.html">🚪 Déconnexion</a></li>
       </ul>
     </nav>
   </header>
@@ -116,29 +109,5 @@
         document.getElementById("doublons").textContent = "N/A";
       });
   </script>
-
-  <script type="module">
-    import { loginUser } from "./api.js";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("login-form");
-      if (form) {
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const username = document.querySelector("#username").value;
-          const password = document.querySelector("#password").value;
-
-          try {
-            const data = await loginUser(username, password);
-            localStorage.setItem("token", data.access_token);
-            window.location.href = "menu.html";
-          } catch (err) {
-            alert("Erreur de connexion");
-          }
-        });
-      }
-    });
-  </script>
-
 </body>
 </html>
