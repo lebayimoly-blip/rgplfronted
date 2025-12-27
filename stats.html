@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0d6efd" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="static/icons/icon-192.png" />
-  <link rel="stylesheet" href="static/style.css" />
-  <title>Statistiques</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Statistiques{% endblock %}
+
+{% block content %}
   <main style="padding: 2rem;">
     <h1>Statistiques globales</h1>
 
@@ -31,25 +24,37 @@
     <hr />
 
     <h2>Répartition par genre</h2>
-    <canvas id="genreChart" width="400" height="200"></canvas>
+    <div class="chart-wrapper">
+      <canvas id="genreChart"></canvas>
+    </div>
 
     <h2>Répartition par province</h2>
-    <canvas id="provinceChart" width="400" height="200"></canvas>
+    <div class="chart-wrapper">
+      <canvas id="provinceChart"></canvas>
+    </div>
 
     <h2>Répartition des rôles</h2>
-    <canvas id="roleChart" width="400" height="200"></canvas>
+    <div class="chart-wrapper">
+      <canvas id="roleChart"></canvas>
+    </div>
 
     <h2>Répartition par ville</h2>
-    <canvas id="villeChart" width="400" height="200"></canvas>
+    <div class="chart-wrapper">
+      <canvas id="villeChart"></canvas>
+    </div>
 
     <h2>Taux de natalité par année</h2>
-    <canvas id="birthChart" width="400" height="200"></canvas>
+    <div class="chart-wrapper">
+      <canvas id="birthChart"></canvas>
+    </div>
 
     <hr />
     <button onclick="exportStatsCSV()">📥 Exporter les statistiques</button>
-    <a href="/" class="btn btn-primary">⬅️ Retour</a>
+    <a href="/home" class="btn btn-primary">⬅️ Retour</a>
   </main>
+{% endblock %}
 
+{% block scripts %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     fetch("/static/data/stats.json")
@@ -136,9 +141,4 @@
       document.body.removeChild(link);
     }
   </script>
- <!-- Scripts JS -->
-  <script src="static/js/db.js"></script>
-  <script src="static/js/main.js"></script>
-  <script src="static/js/sw-register.js"></script>
-</body>
-</html>
+{% endblock %}
